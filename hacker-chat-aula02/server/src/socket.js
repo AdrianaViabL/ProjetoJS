@@ -1,4 +1,6 @@
 import http from 'http'
+import { v4 } from 'uuid'
+import { constants } from './constants.js'
 
 export default class SocketServer {
     constructor({port}){
@@ -8,6 +10,19 @@ export default class SocketServer {
         const server = http.createServer((req, res)=> {
             res.writeHead(200, { 'Content-Type':'text/plain' })
             res.end('deu certo? O.o')
+        })
+
+        server.on('upgrade', (req, socket) => {
+            socket.id = v4()//gerando um id toda vez que alguem se loga pela primeira vez
+            const headers = [
+                'HTTP/1.1 Web Socket Protocol Handshake',
+                'Upgrade: WebSocket',
+                'Connection: Upgrade',
+                ''
+            ].map(line => line.concat('\r\n')).join('')
+
+            socket.write(headers)
+            eventEmitter.emit(constants.event.NEW_USER_CONNECTED, socket)
         })
 
         return new Promise((resolve, reject) => {

@@ -1,8 +1,11 @@
-/* como o projeto será rodado
+/* RODAR O COMANDO npm ci (dentro do client) PARA FAZER ELE VOLTAR A FUNCIONAR
+como o projeto será rodado
 node index.js \
     --username Adriana \
     --room sala \
     --hosturl localhost
+
+
 */
 
 import Events from 'events'
