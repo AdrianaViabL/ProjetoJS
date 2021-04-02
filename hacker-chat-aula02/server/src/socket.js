@@ -15,7 +15,7 @@ export default class SocketServer {
         server.on('upgrade', (req, socket) => {
             socket.id = v4()//gerando um id toda vez que alguem se loga pela primeira vez
             const headers = [
-                'HTTP/1.1 Web Socket Protocol Handshake',
+                'HTTP/1.1 101 Web Socket Protocol Handshake',
                 'Upgrade: WebSocket',
                 'Connection: Upgrade',
                 ''

@@ -9,7 +9,7 @@ async function testServer(){
     const options = {
         port: 9898,
         host: 'localhost',
-        headers:{
+        headers:{ 
             Connection: 'Upgrade',
             Upgrade: 'WebSocket'
         }
