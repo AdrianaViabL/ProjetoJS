@@ -2,10 +2,11 @@
 import SocketServer from './socket.js'
 import Event from 'events'
 import { constants } from './constants.js'
+import Controller from './controller.js'
 
 const eventEmitter = new Event()
 
-async function testServer(){
+/*async function testServer(){
     const options = {
         port: 9898,
         host: 'localhost',
@@ -27,18 +28,22 @@ async function testServer(){
             socket.write('ola!')
         }, 500)
     }) 
-}
+}*/
 const port = process.env.PORT || 9898;
 const socketServer = new SocketServer({ port })
 const server = await socketServer.initialize(eventEmitter)
 console.log('ta rodando na porta O.o ', server.address().port)
+const controller = new Controller({ socketServer })
+eventEmitter.on(constants.event.NEW_USER_CONNECTED, controller.onNewConnection.bind(controller))
 
+
+/* teste para verificar 
 eventEmitter.on(constants.event.NEW_USER_CONNECTED, (socket) =>{
     console.log('new connectio n!! ', socket.id)
     socket.on('data', data => {
         console.log('server recebido', data.toString())
         socket.write('World!')
     })
-})
+})*/
 
-await testServer()
+//await testServer() so para teste
